@@ -180,6 +180,11 @@ bool RCInput::rc_bind(int dsmMode)
     // ask AP_RCProtocol to start a bind
     rcin_prot.start_bind();
 #endif
+
+// #if APJ_BOARD_ID == 168
+    rcin_prot.start_bind();
+// #endif
+
     
 #if HAL_RCINPUT_WITH_AP_RADIO
     if (radio) {

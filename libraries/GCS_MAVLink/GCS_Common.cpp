@@ -950,12 +950,6 @@ GCS_MAVLINK::update(uint32_t max_time_us)
 
     // send a timesync message every 10 seconds; this is for data
     // collection purposes
-    if (tnow - _timesync_request.last_sent_ms > _timesync_request.interval_ms) {
-        if (HAVE_PAYLOAD_SPACE(chan, TIMESYNC)) {
-            send_timesync();
-            _timesync_request.last_sent_ms = tnow;
-        }
-    }
 
     if (waypoint_receiving) {
         const uint32_t wp_recv_time = 1000U + (stream_slowdown*20);
@@ -978,12 +972,12 @@ GCS_MAVLINK::update(uint32_t max_time_us)
  */
 void GCS_MAVLINK::send_system_time()
 {
-    uint64_t time_unix = 0;
-    AP::rtc().get_utc_usec(time_unix); // may fail, leaving time_unix at 0
-
+    // uint64_t time_unix = 0;
+    // AP::rtc().get_utc_usec(time_unix); // may fail, leaving time_unix at 0
+    
     mavlink_msg_system_time_send(
         chan,
-        time_unix,
+        AP::gps().time_week_ms(0)*(uint64_t)1000,
         AP_HAL::millis());
 }
 

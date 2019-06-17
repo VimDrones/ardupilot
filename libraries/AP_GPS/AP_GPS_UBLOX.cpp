@@ -23,6 +23,7 @@
 #include <AP_HAL/Util.h>
 #include <DataFlash/DataFlash.h>
 #include <GCS_MAVLink/GCS.h>
+#include <GCS_MAVLink/GCS_Mavlink.h>
 
 #if CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_NAVIO || \
     CONFIG_HAL_BOARD_SUBTYPE == HAL_BOARD_SUBTYPE_LINUX_BH
@@ -951,6 +952,7 @@ AP_GPS_UBLOX::_parse_gps(void)
             state.time_week_ms    = _buffer.solution.time;
             state.time_week       = _buffer.solution.week;
         }
+
 #if UBLOX_FAKE_3DLOCK
         next_fix = state.status;
         state.num_sats = 10;
